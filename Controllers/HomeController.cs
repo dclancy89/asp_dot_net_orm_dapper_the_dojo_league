@@ -17,13 +17,6 @@ namespace TheDojoLeague.Controllers
         }
 
         [HttpGet]
-        [Route("ninjas")]
-        public IActionResult Ninjas()
-        {
-            return View();
-        }
-
-        [HttpGet]
         [Route("dojos")]
         public IActionResult Dojos()
         {

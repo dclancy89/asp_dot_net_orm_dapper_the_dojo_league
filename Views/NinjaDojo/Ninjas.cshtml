@@ -11,10 +11,15 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>Daniel Clancy</td>
-                    <td>Coding Dojo</td>
-                </tr>
+                @{
+                    foreach(var ninja in ViewBag.Ninjas)
+                    {
+                        <tr>
+                            <td>@ninja.NinjaName</td>
+                            <td>@ninja.DojoId</td>
+                        </tr>
+                    }
+                }
             </tbody>
         </table>
     </div>
@@ -34,8 +39,8 @@
                 }
             </select>
 
-            <label asp-for="dojo"></label>
-            <select asp-for="dojo">
+            <label asp-for="DojoId"></label>
+            <select asp-for="DojoId">
                 <option value="0">Rogue</option>
             </select>
 

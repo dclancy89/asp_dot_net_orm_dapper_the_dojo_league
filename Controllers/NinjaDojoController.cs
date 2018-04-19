@@ -19,10 +19,18 @@ namespace TheDojoLeague.Controllers
             ninjaFactory = new NinjaFactory();
         }
 
+        [HttpGet]
+        [Route("ninjas")]
+        public IActionResult Ninjas()
+        {
+            @ViewBag.Ninjas = ninjaFactory.AllNinjas();
+            return View();
+        }
+
         // GET: /Home/
         [HttpPost]
         [Route("/ninjas/registerninja")]
-        public IActionResult RegisterNinja(Ninja ninja)
+        public IActionResult RegisterNinja(Ninja ninja, int dojo_id)
         {
             if(ModelState.IsValid)
             {
@@ -30,23 +38,13 @@ namespace TheDojoLeague.Controllers
                 {
                     NinjaName = ninja.NinjaName,
                     NinjaLevel = ninja.NinjaLevel,
+                    DojoId = ninja.DojoId,
                     Description = ninja.Description
+                    
                 };
 
-                if(ninja.dojo.Id == 0)
-                {
-                    newNinja.dojo = new Dojo
-                    {
-                        Id = 0,
-                        DojoName = "Rogue",
-                        DojoLocation = "None",
-                        Description = "None"
-                    };
-                }
-                else
-                {
-                    newNinja.dojo = ninja.dojo;
-                }
+                
+
 
                 ninjaFactory.Add(newNinja);
                 return RedirectToAction("Ninjas", "Home");

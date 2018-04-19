@@ -16,7 +16,7 @@ namespace TheDojoLeague.Models
         public int NinjaLevel { get; set; }
 
         [Display(Name = "Assigned Dojo?")]
-        public Dojo dojo { get; set; }
+        public int DojoId { get; set; }
 
         [Display(Name = "Description (optional)")]
         public string Description { get; set; }
@@ -24,5 +24,7 @@ namespace TheDojoLeague.Models
         public DateTime CreatedAt { get; set; }
 
         public DateTime UpdatedAt { get; set; }
+
+        public Dojo dojo { get; set; }
     }
 }
