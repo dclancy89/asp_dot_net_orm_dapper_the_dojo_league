@@ -12,11 +12,13 @@ namespace TheDojoLeague.Controllers
     {
 
         private readonly NinjaFactory ninjaFactory;
+        private readonly DojoFactory dojoFactory;
         public NinjaDojoController()
         {
             //Instantiate a UserFactory object that is immutable (READONLY)
             //This establishes the initial DB connection for us.
             ninjaFactory = new NinjaFactory();
+            dojoFactory = new DojoFactory();
         }
 
         [HttpGet]
@@ -24,13 +26,14 @@ namespace TheDojoLeague.Controllers
         public IActionResult Ninjas()
         {
             @ViewBag.Ninjas = ninjaFactory.AllNinjas();
+            @ViewBag.Dojos = dojoFactory.AllDojos();
             return View();
         }
 
         // GET: /Home/
         [HttpPost]
         [Route("/ninjas/registerninja")]
-        public IActionResult RegisterNinja(Ninja ninja, int dojo_id)
+        public IActionResult RegisterNinja(Ninja ninja)
         {
             if(ModelState.IsValid)
             {
@@ -43,11 +46,8 @@ namespace TheDojoLeague.Controllers
                     
                 };
 
-                
-
-
                 ninjaFactory.Add(newNinja);
-                return RedirectToAction("Ninjas", "Home");
+                return RedirectToAction("Ninjas");
             }
             else
             {
@@ -58,11 +58,40 @@ namespace TheDojoLeague.Controllers
             
         }
 
+        [HttpGet]
+        [Route("ninjas/{id}")]
+        public IActionResult ShowNinja(int id)
+        {
+            ViewBag.Ninja = ninjaFactory.GetNinja(id);
+            return View();
+        }
+
+        [HttpGet]
+        [Route("dojos")]
+        public IActionResult Dojos()
+        {
+            ViewBag.Dojos = dojoFactory.AllDojos();
+            return View();
+        }
+
         [HttpPost]
         [Route("/dojos/registerdojo")]
-        public IActionResult RegisterDojo()
+        public IActionResult RegisterDojo(Dojo dojo)
         {
-            return RedirectToAction("Dojos", "Home");
+
+            if(ModelState.IsValid)
+            {
+                Dojo newDojo = new Dojo
+                {
+                    DojoName = dojo.DojoName,
+                    DojoLocation = dojo.DojoLocation,
+                    Description = dojo.Description
+                };
+
+                dojoFactory.Add(newDojo);
+                return RedirectToAction("Dojos");
+            }
+            return RedirectToAction("Dojos");
         }
 
     }

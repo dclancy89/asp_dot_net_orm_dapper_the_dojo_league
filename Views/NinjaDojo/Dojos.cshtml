@@ -10,9 +10,17 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>Coding Dojo</td>
-                </tr>
+                @{
+                    foreach(var dojo in ViewBag.Dojos)
+                    {
+                        if(dojo.Id != 1){
+                            <tr>
+                                <td>@dojo.DojoName</td>
+                            </tr>
+                        }
+                        
+                    }
+                }
             </tbody>
         </table>
     </div>

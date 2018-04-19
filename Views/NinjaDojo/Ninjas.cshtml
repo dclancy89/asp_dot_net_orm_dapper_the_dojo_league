@@ -15,8 +15,8 @@
                     foreach(var ninja in ViewBag.Ninjas)
                     {
                         <tr>
-                            <td>@ninja.NinjaName</td>
-                            <td>@ninja.DojoId</td>
+                            <td><a href="/ninjas/@ninja.Id">@ninja.NinjaName</a></td>
+                            <td><a href="/dojos/@ninja.dojo.Id">@ninja.dojo.DojoName</a></td>
                         </tr>
                     }
                 }
@@ -41,7 +41,13 @@
 
             <label asp-for="DojoId"></label>
             <select asp-for="DojoId">
-                <option value="0">Rogue</option>
+                @{
+                    foreach(var dojo in ViewBag.Dojos)
+                    {
+                        <option value="@dojo.Id">@dojo.DojoName</option>
+                    }
+                }
+                
             </select>
 
             <label asp-for="Description"></label>

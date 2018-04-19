@@ -15,12 +15,5 @@ namespace TheDojoLeague.Controllers
         {
             return View();
         }
-
-        [HttpGet]
-        [Route("dojos")]
-        public IActionResult Dojos()
-        {
-            return View();
-        }
     }
 }

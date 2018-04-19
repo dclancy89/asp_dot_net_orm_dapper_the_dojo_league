@@ -36,7 +36,27 @@ namespace TheDojoLeague.Factory
             using (IDbConnection dbConnection = Connection)
             {
                 dbConnection.Open();
-                return dbConnection.Query<Ninja>("SELECT * FROM Ninjas");
+                string query = $@"SELECT * FROM Ninjas
+                                  JOIN Dojos ON Ninjas.DojoId = Dojos.Id";
+
+                var myNinjas = dbConnection.Query<Ninja, Dojo, Ninja>(query, (ninja, dojo) => { ninja.dojo = dojo; return ninja; });
+                return myNinjas;
+            }
+        }
+
+        public Ninja GetNinja(int id)
+        {
+            using (IDbConnection dbConnection = Connection)
+            {
+                dbConnection.Open();
+                string query = $@"SELECT * FROM Ninjas
+                                  JOIN Dojos ON Ninjas.DojoId = Dojos.Id
+                                  WHERE Ninjas.Id = {id}";
+
+                
+
+                var myNinja = dbConnection.Query<Ninja, Dojo, Ninja>(query, (ninja, dojo) => {ninja.dojo = dojo; return ninja;});
+                return myNinja.Single();
             }
         }
     }
