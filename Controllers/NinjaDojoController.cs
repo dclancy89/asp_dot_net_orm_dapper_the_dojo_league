@@ -75,7 +75,7 @@ namespace TheDojoLeague.Controllers
         }
 
         [HttpPost]
-        [Route("/dojos/registerdojo")]
+        [Route("dojos/registerdojo")]
         public IActionResult RegisterDojo(Dojo dojo)
         {
 
@@ -92,6 +92,31 @@ namespace TheDojoLeague.Controllers
                 return RedirectToAction("Dojos");
             }
             return RedirectToAction("Dojos");
+        }
+
+        [HttpGet]
+        [Route("dojos/{id}")]
+        public IActionResult ShowDojo(int id)
+        {
+            ViewBag.Dojo = dojoFactory.GetDojo(id);
+            ViewBag.RogueNinjas = ninjaFactory.RogueNinjas();
+            return View();
+        }
+
+        [HttpGet]
+        [Route("dojos/{dojoid}/banish/{ninjaid}")]
+        public IActionResult BanishNinja(int dojoid, int ninjaid)
+        {
+            dojoFactory.BanishNinja(ninjaid);
+            return RedirectToAction("ShowDojo", new { id = dojoid });
+        }
+
+        [HttpGet]
+        [Route("dojos/{dojoid}/recruit/{ninjaid}")]
+        public IActionResult RecruitNinja(int dojoid, int ninjaid)
+        {
+            dojoFactory.RecruitNinja(dojoid, ninjaid);
+            return RedirectToAction("ShowDojo", new { id = dojoid });
         }
 
     }

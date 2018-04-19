@@ -1,0 +1,55 @@
+<h1>@ViewBag.Dojo.DojoName Dojo!</h1>
+
+<p>Dojo Location - @ViewBag.Dojo.DojoLocation</p>
+
+<p>Information - @ViewBag.Dojo.Description</p>
+
+<div class="row">
+    <div class="col">
+        <h1>Current Members</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Ninja</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    foreach(var ninja in @ViewBag.Dojo.ninjas)
+                    {
+                        <tr>
+                            <td><a href="/ninjas/@ninja.Id">@ninja.NinjaName</a></td>
+                            <td><a href="/dojos/@ViewBag.Dojo.Id/banish/@ninja.Id">Banish!</a></td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="col">
+        <h1>Rogue Ninjas</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Ninja</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    foreach(var ninja in @ViewBag.RogueNinjas)
+                    {
+                        <tr>
+                            <td><a href="/ninjas/@ninja.Id">@ninja.NinjaName</a></td>
+                            <td><a href="/dojos/@ViewBag.Dojo.Id/recruit/@ninja.Id">Recruit!</a></td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+ 
+    </div>
+</div>
+
+<a href="/dojos" class="button">Back to Dojos</a>

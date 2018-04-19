@@ -44,6 +44,20 @@ namespace TheDojoLeague.Factory
             }
         }
 
+        public IEnumerable<Ninja> RogueNinjas()
+        {
+            using (IDbConnection dbConnection = Connection)
+            {
+                dbConnection.Open();
+                string query = $@"SELECT * FROM Ninjas
+                                  JOIN Dojos ON Ninjas.DojoId = Dojos.Id
+                                  WHERE Dojos.Id = 1;";
+
+                var myNinjas = dbConnection.Query<Ninja, Dojo, Ninja>(query, (ninja, dojo) => { ninja.dojo = dojo; return ninja; });
+                return myNinjas;
+            }
+        }
+
         public Ninja GetNinja(int id)
         {
             using (IDbConnection dbConnection = Connection)
@@ -59,5 +73,7 @@ namespace TheDojoLeague.Factory
                 return myNinja.Single();
             }
         }
+
+        
     }
 }
